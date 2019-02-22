@@ -15,5 +15,4 @@ export class AppComponent {
       this.domSanitizer.bypassSecurityTrustResourceUrl("/assets/svg/china.svg")
     )
   }
-
 }

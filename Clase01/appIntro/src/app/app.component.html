@@ -4,7 +4,30 @@
     <mat-icon svgIcon="mi_icono"></mat-icon>
   </mat-sidenav>
   <mat-sidenav-content>
-    <button (click)="lateral.toggle()">Mostrar</button>
+    <button mat-button (click)="lateral.toggle()" color="primary">Mostrar</button>
+
+    <button mat-raised-button (click)="lateral.toggle()" color="primary">
+
+      Mostrar
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <button mat-stroked-button (click)="lateral.toggle()" color="primary">Mostrar</button>
+
+    <button mat-flat-button (click)="lateral.toggle()" color="accent">Mostrar</button>
+
+    <button mat-icon-button (click)="lateral.toggle()" color="accent">
+      <mat-icon>face</mat-icon>
+    </button>
+
+    <button mat-fab (click)="lateral.toggle()" color="accent">
+      B
+    </button>
+
+    <button mat-mini-fab (click)="lateral.toggle()" color="accent">
+        B
+      </button>
+
   </mat-sidenav-content>
 </mat-sidenav-container>
 
