@@ -1,8 +1,22 @@
-<mat-card>
+<mat-sidenav-container>
+  <mat-sidenav #lateral position="end" mode="side">
+    <mat-icon>account_circle</mat-icon>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <button (click)="lateral.toggle()">Mostrar</button>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+
+
+
+<!-- <mat-card>
   <button mat-raised-button color="accent">Botón</button>
 </mat-card>
 <div class="MiTema">
   <mat-card>
     <button mat-raised-button color="accent">Botón</button>
   </mat-card>
-</div>
+</div> -->
