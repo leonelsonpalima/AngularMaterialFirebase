@@ -1,0 +1,47 @@
+<mat-sidenav-container>
+  <mat-sidenav #menuLateral>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/" (click)="menuLateral.toggle()">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+      </a>
+      <a mat-list-item routerLink="/clientes" (click)="menuLateral.toggle()">
+        <mat-icon>account_box</mat-icon>
+        <span>Clientes</span>
+      </a>
+      <a mat-list-item routerLink="/transportistas" (click)="menuLateral.toggle()">
+        <mat-icon>commute</mat-icon>
+        <span>Transportistas</span>
+      </a>
+      <a mat-list-item routerLink="/cerrar">
+        <mat-icon>lock</mat-icon>
+        <span>Cerrar sesión</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="menuLateral.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <h1>Sistema</h1>
+      <nav>
+        <ul>
+          <li>
+            <a routerLink="/">Home</a>
+          </li>
+          <li>
+            <a routerLink="/clientes">Clientes</a>
+          </li>
+          <li>
+            <a routerLink="/transportistas">Transportistas</a>
+          </li>
+          <li>
+            <a routerLink="/cerrar">Cerrar sesión</a>
+          </li>
+        </ul>
+      </nav>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
