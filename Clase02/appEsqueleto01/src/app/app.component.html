@@ -24,6 +24,23 @@
       <button mat-icon-button (click)="menuLateral.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
+      <h1>Sistema</h1>
+      <nav>
+        <ul>
+          <li>
+            <a routerLink="/">Home</a>
+          </li>
+          <li>
+            <a routerLink="/clientes">Clientes</a>
+          </li>
+          <li>
+            <a routerLink="/transportistas">Transportistas</a>
+          </li>
+          <li>
+            <a routerLink="/cerrar">Cerrar sesión</a>
+          </li>
+        </ul>
+      </nav>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
