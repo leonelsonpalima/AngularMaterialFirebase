@@ -7,6 +7,7 @@ import { MaterialModule } from './material/material.module';
 import { HomeComponent } from './home/home.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { TransportistasComponent } from './transportistas/transportistas.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const rutas: Route[] = [
   { path: "", component: HomeComponent },
@@ -26,7 +27,8 @@ const rutas: Route[] = [
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
-    RouterModule.forRoot(rutas)
+    RouterModule.forRoot(rutas),
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
