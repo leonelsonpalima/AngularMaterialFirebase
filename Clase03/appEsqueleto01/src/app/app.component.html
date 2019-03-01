@@ -20,11 +20,13 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button mat-icon-button (click)="menuLateral.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <h1>Sistema</h1>
+    <!--     <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout fxLayoutAlign="start center">
+        <button mat-icon-button (click)="menuLateral.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <h1>Sistema</h1>
+      </div>
       <nav>
         <ul>
           <li>
@@ -41,7 +43,30 @@
           </li>
         </ul>
       </nav>
+    </mat-toolbar> -->
+    <mat-toolbar color="primary" fxLayout>
+      <button mat-icon-button (click)="menuLateral.toggle()" fxHide.gt-sm="true">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <h1>Sistema</h1>
+      <nav fxFlex="100%" fxLayoutAlign="end" fxHide.lt-md>
+        <ul>
+          <li>
+            <a routerLink="/">Home</a>
+          </li>
+          <li>
+            <a routerLink="/clientes">Clientes</a>
+          </li>
+          <li>
+            <a routerLink="/transportistas">Transportistas</a>
+          </li>
+          <li>
+            <a routerLink="/cerrar">Cerrar sesión</a>
+          </li>
+        </ul>
+      </nav>
     </mat-toolbar>
+
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
