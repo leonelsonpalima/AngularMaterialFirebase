@@ -1,0 +1,40 @@
+.contenedor {
+	height: 750px;
+	border: 1px solid black;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-wrap: wrap;
+}
+
+.elemento {
+	width:250px;
+	height: 250px;
+}
+
+.elemento:nth-child(1) {
+	background-color: red;
+}
+
+.elemento:nth-child(2) {
+	background-color: green;
+}
+
+.elemento:nth-child(3) {
+	background-color: blue;
+	order: -1
+}
+
+.elemento:nth-child(4) {
+	background-color: magenta;
+}
+
+.elemento:nth-child(5) {
+	background-color: brown;
+	order: -1
+}
+
+.elemento:nth-child(6) {
+	background-color: yellow;
+}

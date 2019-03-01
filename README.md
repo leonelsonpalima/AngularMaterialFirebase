@@ -18,3 +18,17 @@ https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 Unidades vh y vw en CSS
 https://devcode.la/tutoriales/unidades-vh-vw-css/
 
+Juego online para aprender flexbox
+https://flexboxfroggy.com/#es
+
+Al descargar de github ir a la carpeta de la aplicacion y ejecutar:
+npm i
+
+Libreria Angular para trabajar con flexbox
+npm i @angular/flex-layout --save
+
+Github de la libreria flex-layout
+https://github.com/angular/flex-layout
+
+
+
