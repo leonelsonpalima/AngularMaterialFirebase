@@ -9,7 +9,7 @@
           {{cliente.descripcion}}
         </mat-card-content>
         <mat-card-actions fxLayout fxLayoutAlign="end">
-          <button mat-raised-button color="primary">
+          <button mat-raised-button color="primary" (click)="editar(cliente, indice)">
             <mat-icon>edit</mat-icon>
             Editar
           </button>
