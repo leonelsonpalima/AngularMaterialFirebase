@@ -32,4 +32,12 @@ export class ClientesService {
         delay(500)
       )
   }
+
+  editar(cliente: ICliente, indice: number): Observable<any> {
+    this.lista[indice] = cliente
+    return of({})
+      .pipe(
+        delay(500)
+      )
+  }
 }

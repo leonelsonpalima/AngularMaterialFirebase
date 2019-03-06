@@ -1,7 +1,9 @@
 import { ClientesService } from '../servicios/clientes.service';
 import { Component, OnInit } from '@angular/core';
 import { ICliente } from '../interfaces/cliente.interface';
+import { FormularioClienteComponent } from './formulario-cliente/formulario-cliente.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-clientes',
@@ -13,7 +15,7 @@ export class ClientesComponent implements OnInit {
 
   grupo: FormGroup
 
-  constructor(private clientesService: ClientesService) { }
+  constructor(private clientesService: ClientesService, private dialogo: MatDialog) { }
 
   ngOnInit() {
     this.grupo = new FormGroup({
@@ -40,5 +42,37 @@ export class ClientesComponent implements OnInit {
         }
       )
   }
+
+  editar(cliente: ICliente, indice: number) {
+    const referencia: MatDialogRef<FormularioClienteComponent> = this.dialogo.open(FormularioClienteComponent,
+      {
+        /* width: "400px",
+        height: "500px", */
+        panelClass: "formulario",
+        disableClose: true,
+        data: cliente,
+        closeOnNavigation: false,
+        direction: "ltr",
+        hasBackdrop: false,
+        position: {
+          right: "50px",
+          bottom: "50px"
+        }
+      }
+    )
+
+    referencia.afterClosed()
+      .subscribe(
+        respuesta => {
+          if (!respuesta) return false
+
+          this.clientesService.editar(respuesta, indice)
+            .subscribe(
+              respuesta => this.listarClientes()
+            )
+        }
+      )
+  }
+
 
 }

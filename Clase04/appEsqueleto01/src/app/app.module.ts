@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { TransportistasComponent } from './transportistas/transportistas.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormularioClienteComponent } from './clientes/formulario-cliente/formulario-cliente.component';
 
 const rutas: Route[] = [
   { path: "", component: HomeComponent },
@@ -21,7 +22,8 @@ const rutas: Route[] = [
     AppComponent,
     HomeComponent,
     ClientesComponent,
-    TransportistasComponent
+    TransportistasComponent,
+    FormularioClienteComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +33,7 @@ const rutas: Route[] = [
     ReactiveFormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [FormularioClienteComponent]
 })
 export class AppModule { }

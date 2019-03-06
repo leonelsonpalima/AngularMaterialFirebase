@@ -1,0 +1,11 @@
+.formulario {
+  width:600px
+}
+
+.formulario mat-dialog-container {
+  padding:0 0 24px 0
+}
+
+.formulario mat-dialog-content {
+  margin: 10px 0 0 0;
+}
