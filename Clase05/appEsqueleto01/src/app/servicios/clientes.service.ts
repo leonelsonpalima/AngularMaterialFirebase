@@ -18,8 +18,14 @@ export class ClientesService {
   ]
   constructor() { }
 
-  listar(): Observable<ICliente[]> {
-    return of(this.lista)
+  listar(pagina: number): Observable<{}> {
+    const inicio = pagina * 5
+    const fin = inicio + 5
+
+    const slice = this.lista.slice(inicio, fin)
+    const cantidadRegistros = this.lista.length
+
+    return of({ slice, cantidadRegistros })
       .pipe(
         delay(500)
       )

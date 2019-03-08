@@ -1,9 +1,11 @@
 import { ClientesService } from '../servicios/clientes.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ICliente } from '../interfaces/cliente.interface';
 import { FormularioClienteComponent } from './formulario-cliente/formulario-cliente.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef, MatPaginator } from '@angular/material';
+import { Subject, merge } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-clientes',
@@ -15,6 +17,13 @@ export class ClientesComponent implements OnInit {
   columnasAMostrar: string[] = ["nombre", "descripcion"]
   grupo: FormGroup
 
+  observador: Subject<any> = new Subject()
+
+  totalRegistros: number
+  registrosPorPagina: number = 5
+
+  @ViewChild(MatPaginator) paginador: MatPaginator
+
   constructor(private clientesService: ClientesService, private dialogo: MatDialog) { }
 
   ngOnInit() {
@@ -22,13 +31,25 @@ export class ClientesComponent implements OnInit {
       nombre: new FormControl(null, Validators.required),
       descripcion: new FormControl(null, Validators.required)
     })
-    this.listarClientes()
+
+    merge(this.observador, this.paginador.page)
+      .pipe(
+        startWith({})
+      )
+      .subscribe(
+        () => {
+          this.listarClientes(this.paginador.pageIndex)
+        }
+      )
   }
 
-  listarClientes() {
-    this.clientesService.listar()
+  listarClientes(pagina: number) {
+    this.clientesService.listar(pagina)
       .subscribe(
-        registros => this.listaClientes = registros
+        (respuesta: any) => {
+          this.listaClientes = respuesta.slice
+          this.totalRegistros = respuesta.cantidadRegistros
+        }
       )
   }
 
@@ -37,7 +58,7 @@ export class ClientesComponent implements OnInit {
     this.clientesService.grabar(cliente)
       .subscribe(
         respuesta => {
-          this.listarClientes()
+          this.observador.next()
           this.grupo.reset()
         }
       )
@@ -68,7 +89,7 @@ export class ClientesComponent implements OnInit {
 
           this.clientesService.editar(respuesta, indice)
             .subscribe(
-              respuesta => this.listarClientes()
+              respuesta => this.observador.next()
             )
         }
       )

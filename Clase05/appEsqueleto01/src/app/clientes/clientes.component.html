@@ -15,8 +15,9 @@
 
         <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
         <tr mat-row *matRowDef="let filas; columns: columnasAMostrar"></tr>
-
       </table>
+
+      <mat-paginator [length]="totalRegistros" [pageSize]="registrosPorPagina"></mat-paginator>
 
       <!--       <mat-card fxFlex="30%" fxFlex.lt-lg="45%" fxFlex.lt-md="100%"
         *ngFor="let cliente of listaClientes; let indice=index">
