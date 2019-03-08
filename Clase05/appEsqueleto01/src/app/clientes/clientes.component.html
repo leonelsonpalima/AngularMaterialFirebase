@@ -1,6 +1,6 @@
 <div class="contenedor" fxLayout fxLayoutAlign="center">
   <div fxLayout fxLayout.lt-md="column" fxFlex="1260px" fxFlex.lt-lg="90%">
-    <div fxLayout="row wrap" fxLayoutAlign="space-between" fxFlex="70%" fxFlex.lt-md fxFlexOrder="1"
+    <div fxLayout="column" fxLayoutAlign="space-between" fxFlex="70%" fxFlex.lt-md fxFlexOrder="1"
       fxFlexOrder.lt-md="2">
       <table mat-table [dataSource]="listaClientes">
         <ng-container matColumnDef="nombre">
@@ -13,8 +13,18 @@
           <td mat-cell *matCellDef="let fila">{{fila.descripcion}}</td>
         </ng-container>
 
+        <ng-container matColumnDef="botonera">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let fila">
+            <button mat-icon-button color="accent">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
-        <tr mat-row *matRowDef="let filas; columns: columnasAMostrar"></tr>
+        <tr mat-row *matRowDef="let fila; columns: columnasAMostrar; let indice=index" (click)="editar(fila, indice)">
+        </tr>
       </table>
 
       <mat-paginator [length]="totalRegistros" [pageSize]="registrosPorPagina"></mat-paginator>

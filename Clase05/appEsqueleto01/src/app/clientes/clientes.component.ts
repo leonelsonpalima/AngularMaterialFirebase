@@ -14,7 +14,7 @@ import { startWith } from 'rxjs/operators';
 })
 export class ClientesComponent implements OnInit {
   listaClientes: ICliente[]
-  columnasAMostrar: string[] = ["nombre", "descripcion"]
+  columnasAMostrar: string[] = ["nombre", "descripcion", "botonera"]
   grupo: FormGroup
 
   observador: Subject<any> = new Subject()
