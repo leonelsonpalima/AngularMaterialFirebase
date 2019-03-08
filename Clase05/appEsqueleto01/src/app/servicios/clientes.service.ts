@@ -40,6 +40,7 @@ export class ClientesService {
   }
 
   editar(cliente: ICliente, indice: number): Observable<any> {
+
     this.lista[indice] = cliente
     return of({})
       .pipe(
