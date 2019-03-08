@@ -12,7 +12,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 })
 export class ClientesComponent implements OnInit {
   listaClientes: ICliente[]
-
+  columnasAMostrar: string[] = ["nombre", "descripcion"]
   grupo: FormGroup
 
   constructor(private clientesService: ClientesService, private dialogo: MatDialog) { }
