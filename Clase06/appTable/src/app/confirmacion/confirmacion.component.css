@@ -1,0 +1,10 @@
+.confirmacion {
+  width: 320px
+}
+.confirmacion mat-dialog-container {
+  padding: 0 0 24px 0
+}
+
+.confirmacion .mat-dialog-content {
+  margin: 0
+}
