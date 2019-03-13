@@ -1,0 +1,70 @@
+<div class="contenedor" fxLayout fxLayoutAlign="center">
+  <div fxLayout fxLayout.lt-md="column" fxFlex="1260px" fxFlex.lt-lg="90%">
+    <div fxLayout="column" fxLayoutAlign="space-between" fxFlex="70%" fxFlex.lt-md fxFlexOrder="1"
+      fxFlexOrder.lt-md="2">
+      <table mat-table [dataSource]="listaClientes">
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef>Nombre de cliente</th>
+          <td mat-cell *matCellDef="let fila">{{fila.nombre}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef>Descripción</th>
+          <td mat-cell *matCellDef="let fila">{{fila.descripcion}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="botonera">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let fila">
+            <button mat-icon-button color="accent">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
+        <tr mat-row *matRowDef="let fila; columns: columnasAMostrar; let indice=index" (click)="editar(fila, indice)">
+        </tr>
+      </table>
+
+      <mat-paginator [length]="totalRegistros" [pageSize]="registrosPorPagina"></mat-paginator>
+
+      <!--       <mat-card fxFlex="30%" fxFlex.lt-lg="45%" fxFlex.lt-md="100%"
+        *ngFor="let cliente of listaClientes; let indice=index">
+        <mat-card-title>{{cliente.nombre}}</mat-card-title>
+        <mat-card-content>
+          {{cliente.descripcion}}
+        </mat-card-content>
+        <mat-card-actions fxLayout fxLayoutAlign="end">
+          <button mat-raised-button color="primary" (click)="editar(cliente, indice)">
+            <mat-icon>edit</mat-icon>
+            Editar
+          </button>
+          <button mat-stroked-button color="accent">
+            <mat-icon>delete</mat-icon>
+            Eliminar
+          </button>
+        </mat-card-actions>
+      </mat-card> -->
+    </div>
+    <div fxFlex="30%" fxFlex.lt-md class="formulario" fxFlexOrder="2" fxFlexOrder.lt-md="1">
+      <form [formGroup]="grupo" fxLayout="column">
+        <h4>Agregar cliente</h4>
+        <mat-form-field>
+          <input type="text" matInput placeholder="Nombre" formControlName="nombre" required>
+          <mat-error *ngIf="grupo.get('nombre').invalid && grupo.get('nombre').touched">El nombre es obligatorio
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput formControlName="descripcion" required placeholder="Descripción"></textarea>
+          <mat-error *ngIf="grupo.get('descripcion').invalid && grupo.get('descripcion').touched">La descripción es
+            obligatoria</mat-error>
+        </mat-form-field>
+        <div fxLayout fxLayoutAlign="center">
+          <button mat-raised-button color="primary" type="button" (click)="grabar()"
+            [disabled]="grupo.invalid">Grabar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
