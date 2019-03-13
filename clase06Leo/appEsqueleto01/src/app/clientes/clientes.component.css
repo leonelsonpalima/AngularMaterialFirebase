@@ -1,0 +1,11 @@
+.contenedor {
+  padding-top: 20px;
+}
+
+mat-card {
+  margin-bottom: 20px;
+}
+
+.formulario {
+  padding: 0 30px;
+}
