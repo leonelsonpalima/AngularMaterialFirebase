@@ -1,0 +1,11 @@
+<mat-form-field>
+  <mat-select placeholder="Estado Civil" [(ngModel)]="estadoSeleccionado" required>
+    <mat-option *ngFor="let estado of estadosCiviles; let indice=index" [value]="indice">{{estado}}</mat-option>
+  </mat-select>
+</mat-form-field>
+<select placeholder="Estado Civil" [(ngModel)]="estadoSeleccionado" required matNativeControl>
+  <option *ngFor="let estado of estadosCiviles; let indice=index" [value]="indice">{{estado}}</option>
+</select>
+
+<mat-progress-spinner [value]="avance" mode="indeterminate"></mat-progress-spinner>
+<mat-progress-bar [value]="avance" mode="indeterminate"></mat-progress-bar>
