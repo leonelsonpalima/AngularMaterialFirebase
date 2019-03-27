@@ -22,9 +22,11 @@
 
 </mat-form-field>
 
-<mat-grid-list cols="2" rowHeight="3:2">
-  <mat-grid-tile colspan="2" rowspan="1">1</mat-grid-tile>
-  <mat-grid-tile colspan="2" rowspan="1">2</mat-grid-tile>
-  <mat-grid-tile>3</mat-grid-tile>
-  <mat-grid-tile>4</mat-grid-tile>
-</mat-grid-list>
+<div style="height: 400px;">
+  <mat-grid-list cols="4" rowHeight="3:2">
+    <mat-grid-tile [colspan]="col3" [rowspan]="row1">1</mat-grid-tile>
+    <mat-grid-tile [colspan]="col1" [rowspan]="row2">2</mat-grid-tile>
+    <mat-grid-tile [colspan]="col1">3</mat-grid-tile>
+    <mat-grid-tile [colspan]="col2">4</mat-grid-tile>
+  </mat-grid-list>
+</div>
