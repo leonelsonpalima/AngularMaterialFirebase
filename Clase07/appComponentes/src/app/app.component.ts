@@ -18,7 +18,29 @@ export class AppComponent {
 
   estadoSeleccionado = 2
 
+  col1 = 1
+  col2 = 2
+  col3 = 3
+  row1 = 1
+  row2 = 2
+
   constructor(private breakpointObserver: BreakpointObserver) { }
+
+  default() {
+    this.col1 = 1
+    this.col2 = 2
+    this.col3 = 3
+    this.row1 = 1
+    this.row2 = 2
+  }
+
+  movil() {
+    this.col1 = 4
+    this.col2 = 4
+    this.col3 = 4
+    this.row1 = 1
+    this.row2 = 1
+  }
 
   ngOnInit() {
     const intervalo = setInterval(() => {
@@ -28,13 +50,13 @@ export class AppComponent {
 
     this.breakpointObserver
       //.observe(["(min-width:500px)"])
-      .observe([Breakpoints.Small, Breakpoints.HandsetPortrait])
+      .observe(["(max-width:500px)"])
       .subscribe(
         (estado: BreakpointState) => {
           if (estado.matches) {
-            console.log("Vista mínima de 500px")
+            this.movil()
           } else {
-            console.log("No cumple con lo mínimo")
+            this.default()
           }
         }
       )
