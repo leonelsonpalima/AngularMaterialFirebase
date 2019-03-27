@@ -10,6 +10,11 @@ export class AppComponent {
 
   avance = 0
 
+  fechaActual = new Date()
+  fechaMinima = this.fechaActual.setFullYear(this.fechaActual.getFullYear() - 18)
+
+  fecha = new Date(2018, 6, 24)
+
   estadoSeleccionado = 2
 
   ngOnInit() {
