@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-root',
@@ -17,11 +18,29 @@ export class AppComponent {
 
   estadoSeleccionado = 2
 
+  constructor(private breakpointObserver: BreakpointObserver) { }
+
   ngOnInit() {
     const intervalo = setInterval(() => {
       if (this.avance >= 100) return false
       this.avance += 5
     }, 500)
+
+    this.breakpointObserver
+      //.observe(["(min-width:500px)"])
+      .observe([Breakpoints.Small, Breakpoints.HandsetPortrait])
+      .subscribe(
+        (estado: BreakpointState) => {
+          if (estado.matches) {
+            console.log("Vista mínima de 500px")
+          } else {
+            console.log("No cumple con lo mínimo")
+          }
+        }
+      )
+
+
+
   }
 
   cambio(evt) {
