@@ -31,4 +31,17 @@ Github de la libreria flex-layout
 https://github.com/angular/flex-layout
 
 
+Ejercicio (clase 08)
+
+\ Login: correo, contraseña
+\ Olvidó contraseña: correo
+\ Dashboard: Vistas recetas por día, combobox: 'Últimos 30 días', 'Últimos 7 días'
+\           Top 10 recetas + calificadas
+
+
+\ Categorías: En español e inglés
+\ Recetas: Título, sumilla, ingredientes, instrucciones, # personas, imágenes (una principal), categorías, fecha publicación, estado.
+\ Comentarios: De todas las recetas, de una receta.
+
+\ Usuarios sistema, Usuarios portal: Nombre, correo, contraseña, imagen, estado.
 
