@@ -1,0 +1,12 @@
+mat-card {
+  padding:0
+}
+
+div.mat-card-header-text {
+  margin: 0 !important
+}
+
+h5 {
+  margin:0;
+  padding:0;
+}
