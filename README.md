@@ -45,3 +45,9 @@ Ejercicio (clase 08)
 
 \ Usuarios sistema, Usuarios portal: Nombre, correo, contraseña, imagen, estado.
 
+
+Angular Fire2
+https://github.com/angular/angularfire2
+
+
+Firebase
