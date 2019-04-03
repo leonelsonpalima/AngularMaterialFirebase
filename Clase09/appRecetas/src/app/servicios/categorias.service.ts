@@ -1,40 +1,62 @@
 import { Injectable } from '@angular/core';
 import { Categoria } from '../interfaces/categoria';
-import { of, Observable } from 'rxjs';
+import { of, Observable, Subject } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { map } from 'rxjs/operators';
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root'
 })
 export class CategoriasService {
 
-	private lista: Categoria[] = [
-		{ nombreEspanol: "Entremeses y Sanguches", nombreIngles: "Appetizers and Sandwiches" },
-		{ nombreEspanol: "Sopas", nombreIngles: "Soups" },
-		{ nombreEspanol: "Carnes y Aves", nombreIngles: "Meat and Poultry" }
-	]
+  /*   private lista: Categoria[] = [
+      { nombreEspanol: "Entremeses y Sanguches", nombreIngles: "Appetizers and Sandwiches" },
+      { nombreEspanol: "Sopas", nombreIngles: "Soups" },
+      { nombreEspanol: "Carnes y Aves", nombreIngles: "Meat and Poultry" }
+    ] */
+  private lista: Categoria[] = []
 
-	constructor() { }
+  onCambioCategorias: Subject<Categoria[]> = new Subject<Categoria[]>()
 
-	listar(): Observable<any> {
-		return of(this.lista)
-	}
+  constructor(private fs: AngularFirestore) { }
 
-	insertar(categoria: Categoria): Observable<any> {
-		this.lista.push(categoria)
-		return of(null)
-	}
+  listar() {
+    this.fs.collection("categorias").snapshotChanges()
+      .pipe(
+        map(arrDocumentos => {
+          return arrDocumentos.map(doc => {
+            return {
+              id: doc.payload.doc.id,
+              ...doc.payload.doc.data()
+            }
+          })
+        })
+      )
+      .subscribe(
+        (resultado: Categoria[]) => {
+          this.lista = resultado
+          this.onCambioCategorias.next(this.lista)
+        }
+      )
+    //return of(this.lista)
+  }
 
-	detallar(id: number): Observable<any> {
-		return of(this.lista[id])
-	}
+  insertar(categoria: Categoria): Observable<any> {
+    this.lista.push(categoria)
+    return of(null)
+  }
 
-	actualizar(categoria: Categoria, id: number): Observable<any> {
-		this.lista[id] = categoria
-		return of(null)
-	}
+  detallar(id: number): Observable<any> {
+    return of(this.lista[id])
+  }
 
-	eliminar(id: number): Observable<any> {
-		this.lista.splice(id, 1)
-		return of(null)
-	}
+  actualizar(categoria: Categoria, id: number): Observable<any> {
+    this.lista[id] = categoria
+    return of(null)
+  }
+
+  eliminar(id: number): Observable<any> {
+    this.lista.splice(id, 1)
+    return of(null)
+  }
 }

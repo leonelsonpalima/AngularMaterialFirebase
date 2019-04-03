@@ -1,4 +1,5 @@
 export interface Categoria {
-	nombreEspanol?: string
-	nombreIngles?: string
+  id?: string
+  nombreEspanol?: string
+  nombreIngles?: string
 }
