@@ -6,7 +6,7 @@ import { ConfirmarComponent } from 'src/app/compartido/confirmar/confirmar.compo
 import { FormularioCategoriaComponent } from '../formulario-categoria/formulario-categoria.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-listado-categorias',
@@ -18,6 +18,8 @@ export class ListadoCategoriasComponent implements OnInit {
   categorias: Categoria[] = []
   columnasAMostrar: string[] = ["nombreEspanol", "nombreIngles", "acciones"]
 
+  suscripcion: Subscription
+
   constructor(private categoriasService: CategoriasService, private dialog: MatDialog, private fs: AngularFirestore) { }
 
   ngOnInit() {
@@ -25,11 +27,19 @@ export class ListadoCategoriasComponent implements OnInit {
           .subscribe(
             resultado => console.log(resultado)
           ) */
-    this.categoriasService.onCambioCategorias
+    /* this.categoriasService.onCambioCategorias
       .subscribe(
         (resultado: Categoria[]) => this.categorias = resultado
+      ) */
+
+    this.suscripcion = this.categoriasService.listar()
+      .subscribe(
+        (resultado: Categoria[]) => {
+          this.categorias = resultado
+          //this.lista = resultado
+          //this.categoriasService.onCambioCategorias.next(resultado)
+        }
       )
-    this.categoriasService.listar()
   }
 
 
@@ -37,8 +47,8 @@ export class ListadoCategoriasComponent implements OnInit {
     this.formulario()
   }
 
-  editar(categoria: Categoria, id: number) {
-    this.formulario({ categoria, id })
+  editar(categoria: Categoria) {
+    this.formulario({ categoria, id: categoria.id })
   }
 
   formulario(data = null) {
@@ -52,22 +62,16 @@ export class ListadoCategoriasComponent implements OnInit {
         (respuesta: any) => {
           if (!respuesta) return false
 
-          if (respuesta.id != -1) {
+          if (respuesta.id != "") {
             this.categoriasService.actualizar(respuesta.categoria, respuesta.id)
-              .subscribe(
-                () => null //this.listar()
-              )
           } else {
             this.categoriasService.insertar(respuesta.categoria)
-              .subscribe(
-                () => null
-              )
           }
         }
       )
   }
 
-  eliminar(id: number) {
+  eliminar(id: string) {
     const ref: MatDialogRef<ConfirmarComponent> = this.dialog.open(ConfirmarComponent, {
       panelClass: "confirmacion",
       disableClose: true
@@ -80,10 +84,11 @@ export class ListadoCategoriasComponent implements OnInit {
         if (!respuesta) return false
 
         this.categoriasService.eliminar(id)
-          .subscribe(
-            () => this.listar()
-          )
       }
     )
+  }
+
+  ngOnDestroy() {
+    this.suscripcion.unsubscribe()
   }
 }
