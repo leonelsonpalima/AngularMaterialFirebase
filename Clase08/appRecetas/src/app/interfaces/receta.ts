@@ -1,16 +1,16 @@
 export interface Receta {
-  id?: string
-  titulo?: string
-  tituloIngles?: string
-  sumilla?: string
-  sumillaIngles?: string
-  ingredientes?: any
-  ingredientesIngles?: any
-  instrucciones?: any
-  instruccionesIngles?: any
-  cantidadPersonas?: number
-  imagenes?: any
-  categorias?: any
-  fechaPublicacion?: Date
-  estado?: boolean
+	id?: string
+	tituloEspanol?: string
+	tituloIngles?: string
+	sumillaEspanol?: string
+	sumillaIngles?: string
+	ingredientesEspanol?: string[]
+	ingredientesIngles?: string[]
+	instruccionesEspanol?: string[]
+	instruccionesIngles?: string[]
+	cantidadPersonas?: number
+	imagenes?: any
+	categorias?: any[]
+	fechaPublicacion?: Date
+	estado?: boolean
 }

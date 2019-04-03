@@ -8,13 +8,18 @@ import { ListadoCategoriasComponent } from './listado-categorias/listado-categor
 import { FormularioCategoriaComponent } from './formulario-categoria/formulario-categoria.component';
 import { ListadoComentariosComponent } from './listado-comentarios/listado-comentarios.component';
 import { CompartidoModule } from '../compartido/compartido.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [ListadoRecetasComponent, FormularioRecetaComponent, ListadoCategoriasComponent, FormularioCategoriaComponent, ListadoComentariosComponent],
-  imports: [
-    CommonModule,
-    RecetasRoutingModule,
-    CompartidoModule
-  ]
+	declarations: [ListadoRecetasComponent, FormularioRecetaComponent, ListadoCategoriasComponent, FormularioCategoriaComponent, ListadoComentariosComponent],
+	imports: [
+		CommonModule,
+		RecetasRoutingModule,
+		CompartidoModule,
+		ReactiveFormsModule
+	],
+	entryComponents: [
+		FormularioCategoriaComponent, FormularioRecetaComponent
+	]
 })
 export class RecetasModule { }
