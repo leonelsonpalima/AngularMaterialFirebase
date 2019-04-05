@@ -15,6 +15,8 @@ export class FormularioRecetaComponent implements OnInit {
   grupo: FormGroup
   id: any
 
+  archivo: any
+
   constructor(@Inject(MAT_DIALOG_DATA) public data, private dialogRef: MatDialogRef<FormularioRecetaComponent>, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -27,7 +29,8 @@ export class FormularioRecetaComponent implements OnInit {
   crearForm(data: Receta): FormGroup {
     return this.formBuilder.group({
       tituloEspanol: [data.tituloEspanol, Validators.required],
-      tituloIngles: [data.tituloIngles, Validators.required]
+      tituloIngles: [data.tituloIngles, Validators.required],
+      imagenes: [data.imagenes]
     })
   }
 
@@ -36,6 +39,25 @@ export class FormularioRecetaComponent implements OnInit {
       receta: this.grupo.getRawValue(),
       id: this.id
     })
+  }
+
+  nuevaImagen(evt) {
+    const file: File = evt.target.files[0]
+
+    this.grupo.patchValue({ imagenes: file })
+
+    const fr = new FileReader()
+
+    fr.onloadend = (resultado) => {
+      console.log(resultado)
+      //this.archivo = (resultado.target as FileReader).result
+      this.archivo = (<FileReader>resultado.target).result
+    }
+
+    fr.readAsDataURL(file)
+
+
+    console.log(evt.target.files[0])
   }
 
 }

@@ -3,7 +3,8 @@ import { Receta } from '../interfaces/receta';
 import { Observable, of, Subject } from 'rxjs';
 import { Categoria } from '../interfaces/categoria';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+import { map, finalize } from 'rxjs/operators';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,7 @@ export class RecetasService {
 
   onCambioRecetas: Subject<Categoria[]> = new Subject<Categoria[]>()
 
-  constructor(private fs: AngularFirestore) { }
+  constructor(private fs: AngularFirestore, private fstorage: AngularFireStorage) { }
 
   listar(): Observable<any> {
     return this.fs.collection("recetas").snapshotChanges()
@@ -54,7 +55,20 @@ export class RecetasService {
   }
 
   insertar(receta: Receta) {
-    this.fs.collection("recetas").add(receta)
+    const archivo: File = receta.imagenes
+    const ruta = `imagenes/${Date.now()}_${archivo.name}`
+    const ref: AngularFireStorageReference = this.fstorage.ref(ruta)
+    const tarea: AngularFireUploadTask = ref.put(archivo)
+    tarea.snapshotChanges()
+      .pipe(
+        finalize(() => {
+          return ref.getDownloadURL()
+        })
+      )
+      .subscribe(
+        url => console.log(url)
+      )
+    //this.fs.collection("recetas").add(receta)
   }
 
   detallar(id: number): Observable<any> {
