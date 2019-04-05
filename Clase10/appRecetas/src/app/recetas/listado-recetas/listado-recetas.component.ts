@@ -4,87 +4,81 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { ConfirmarComponent } from 'src/app/compartido/confirmar/confirmar.component';
 import { RecetasService } from 'src/app/servicios/recetas.service';
 import { FormularioRecetaComponent } from '../formulario-receta/formulario-receta.component';
-import { Subject, merge } from 'rxjs';
+import { Subject, merge, Subscription } from 'rxjs';
 import { switchMap, startWith } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
-	selector: 'app-listado-recetas',
-	templateUrl: './listado-recetas.component.html',
-	styleUrls: ['./listado-recetas.component.css']
+  selector: 'app-listado-recetas',
+  templateUrl: './listado-recetas.component.html',
+  styleUrls: ['./listado-recetas.component.css']
 })
 export class ListadoRecetasComponent implements OnInit {
-	observador: Subject<any> = new Subject<any>()
+  observador: Subject<any> = new Subject<any>()
 
-	recetas: Receta[] = []
-	columnasAMostrar: string[] = ["tituloEspanol", "tituloIngles", "acciones"]
+  recetas: Receta[] = []
+  columnasAMostrar: string[] = ["tituloEspanol", "tituloIngles", "acciones"]
 
-	constructor(private recetasService: RecetasService, private dialog: MatDialog) { }
+  suscripcion: Subscription
 
-	ngOnInit() {
-		merge(this.observador)
-			.pipe(
-				startWith({}),
-				switchMap(() => this.recetasService.listar())
-			)
-			.subscribe(
-				(recetas: Receta[]) => {
-					this.recetas = Object.assign([], recetas)
-				}
-			)
-	}
+  constructor(private recetasService: RecetasService, private dialog: MatDialog, private fs: AngularFirestore) { }
 
-	nuevo() {
-		this.formulario()
-	}
+  ngOnInit() {
+    this.suscripcion = this.recetasService.listar()
+      .subscribe(
+        (resultado: Receta[]) => {
+          this.recetas = resultado
+        }
+      )
+  }
 
-	editar(receta: Receta, id: number) {
-		this.formulario({ receta, id })
-	}
+  nuevo() {
+    this.formulario()
+  }
 
-	formulario(data = null) {
-		const ref = this.dialog.open(FormularioRecetaComponent, {
-			panelClass: "miClase",
-			data
-		})
+  editar(receta: Receta) {
+    this.formulario({ receta, id: receta.id })
+  }
 
-		ref.afterClosed()
-			.subscribe(
-				(respuesta: any) => {
-					if (!respuesta) return false
+  formulario(data = null) {
+    const ref = this.dialog.open(FormularioRecetaComponent, {
+      panelClass: "miClase",
+      data
+    })
 
-					if (respuesta.id != -1) {
-						this.recetasService.actualizar(respuesta.categoria, respuesta.id)
-							.subscribe(
-								() => this.observador.next()
-							)
-					} else {
-						this.recetasService.insertar(respuesta.categoria)
-							.subscribe(
-								() => this.observador.next()
-							)
-					}
-				}
-			)
-	}
+    ref.afterClosed()
+      .subscribe(
+        (respuesta: any) => {
+          if (!respuesta) return false
 
-	eliminar(id: number) {
-		const ref: MatDialogRef<ConfirmarComponent> = this.dialog.open(ConfirmarComponent, {
-			panelClass: "confirmacion",
-			disableClose: true
-		})
+          if (respuesta.id != "") {
+            this.recetasService.actualizar(respuesta.receta, respuesta.id)
+          } else {
+            this.recetasService.insertar(respuesta.receta)
+          }
+        }
+      )
+  }
 
-		ref.componentInstance.mensaje = "¿Quieres borrar?"
+  eliminar(id: string) {
+    const ref: MatDialogRef<ConfirmarComponent> = this.dialog.open(ConfirmarComponent, {
+      panelClass: "confirmacion",
+      disableClose: true
+    })
 
-		ref.afterClosed().subscribe(
-			respuesta => {
-				if (!respuesta) return false
+    ref.componentInstance.mensaje = "¿Quieres borrar?"
 
-				this.recetasService.eliminar(id)
-					.subscribe(
-						() => this.observador.next()
-					)
-			}
-		)
-	}
+    ref.afterClosed().subscribe(
+      respuesta => {
+        if (!respuesta) return false
+
+        this.recetasService.eliminar(id)
+      }
+    )
+  }
+
+  ngOnDestroy() {
+    this.suscripcion.unsubscribe()
+  }
 
 }

@@ -9,6 +9,7 @@ import { CompartidoModule } from './compartido/compartido.module';
 import { AngularFireModule } from "@angular/fire"
 import { AngularFirestoreModule } from "@angular/fire/firestore"
 import { AngularFireAuthModule } from "@angular/fire/auth"
+import { AngularFireStorageModule } from "@angular/fire/storage"
 import { environment } from 'src/environments/environment';
 
 @NgModule({
@@ -22,7 +23,8 @@ import { environment } from 'src/environments/environment';
     CompartidoModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireStorageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

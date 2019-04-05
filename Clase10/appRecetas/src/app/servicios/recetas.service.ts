@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Receta } from '../interfaces/receta';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { Categoria } from '../interfaces/categoria';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { map, finalize } from 'rxjs/operators';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root'
 })
 export class RecetasService {
 
-	private lista: Receta[] = [
+	/*private lista: Receta[] = [
 		{
 			tituloEspanol: "Arroz con pollo",
 			tituloIngles: "Rice with chicken",
@@ -29,30 +32,55 @@ export class RecetasService {
 			ingredientesIngles: ["water", "egg", "onion", "garlic"],
 			estado: true
 		}
-	]
+  ]*/
 
-	constructor() { }
+  private lista: Receta[] = []
 
-	listar(): Observable<any> {
-		return of(this.lista)
-	}
+  onCambioRecetas: Subject<Categoria[]> = new Subject<Categoria[]>()
 
-	insertar(receta: Receta): Observable<any> {
-		this.lista.push(receta)
-		return of(null)
-	}
+  constructor(private fs: AngularFirestore, private fstorage: AngularFireStorage) { }
 
-	detallar(id: number): Observable<any> {
-		return of(this.lista[id])
-	}
+  listar(): Observable<any> {
+    return this.fs.collection("recetas").snapshotChanges()
+      .pipe(
+        map(arrDocumentos => {
+          return arrDocumentos.map(doc => {
+            return {
+              id: doc.payload.doc.id,
+              ...doc.payload.doc.data()
+            }
+          })
+        })
+      )
+  }
 
-	actualizar(receta: Receta, id: number): Observable<any> {
-		this.lista[id] = receta
-		return of(null)
-	}
+  insertar(receta: Receta) {
+    const archivo: File = receta.imagenes
+    const ruta = `imagenes/${Date.now()}_${archivo.name}`
+    const ref: AngularFireStorageReference = this.fstorage.ref(ruta)
+    const tarea: AngularFireUploadTask = ref.put(archivo)
+    tarea.snapshotChanges()
+      .pipe(
+        finalize(() => {
+          return ref.getDownloadURL()
+        })
+      )
+      .subscribe(
+        url => console.log(url)
+      )
+    //this.fs.collection("recetas").add(receta)
+  }
 
-	eliminar(id: number): Observable<any> {
-		this.lista.splice(id, 1)
-		return of(null)
-	}
+  detallar(id: number): Observable<any> {
+    return of(this.lista[id])
+  }
+
+  actualizar(receta: Receta, id: string) {
+    const ref = this.fs.collection("recetas").doc(id)
+    ref.update(receta)
+  }
+
+  eliminar(id: string) {
+    this.fs.doc(`recetas/${id}`).delete()
+  }
 }
