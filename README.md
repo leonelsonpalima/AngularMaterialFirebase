@@ -51,3 +51,14 @@ https://github.com/angular/angularfire2
 
 
 Firebase
+
+###Firebase Tools
+
+1. npm i -g firebase-tools
+2. firebase login
+3. firebase init (Seleccionamos con la barra espaciadora "Functions", y con enter aceptamos)
+4. seleccionamos el proyecto
+5. TSlint no
+6. Dependencias si
+7. npm run build
+8. firebase deploy (Dentro de la carpeta functions)
