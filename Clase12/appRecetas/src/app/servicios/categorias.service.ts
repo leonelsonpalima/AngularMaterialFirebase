@@ -21,7 +21,7 @@ export class CategoriasService {
   constructor(private fs: AngularFirestore) { }
 
   listar(): Observable<any> {
-    return this.fs.collection("categorias").snapshotChanges()
+    return this.fs.collection("categorias/datos/listado").snapshotChanges()
       .pipe(
         map(arrDocumentos => {
           return arrDocumentos.map(doc => {
@@ -37,7 +37,7 @@ export class CategoriasService {
   }
 
   insertar(categoria: Categoria) {
-    this.fs.collection("categorias").add(categoria)
+    this.fs.collection("categorias/datos/listado").add(categoria)
     //this.lista.push(categoria)
     //return of(null)
   }
@@ -47,7 +47,7 @@ export class CategoriasService {
   }
 
   actualizar(categoria: Categoria, id: string) {
-    const ref = this.fs.collection("categorias").doc(id)
+    const ref = this.fs.collection("categorias/datos/listado").doc(id)
     ref.update(categoria)
     /* .then(
       respuesta => {
@@ -59,6 +59,6 @@ export class CategoriasService {
 
   eliminar(id: string) {
     //this.fs.collection("categorias").doc(id)
-    this.fs.doc(`categorias/${id}`).delete()
+    this.fs.doc(`categorias/datos/listado/${id}`).delete()
   }
 }
