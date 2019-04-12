@@ -40,8 +40,12 @@ app.get("/todos", async (req, res) => {
   res.send(categorias)
 })
 app.get("/registrados", (req, res) => {
-  admin.auth().listUsers(1000, "")
-    .then(usuariosResultados => {
+  admin.auth().listUsers(1000, "algo")
+    .then((usuariosResultados: any) => {
+      const usuarios = []
+      usuariosResultados.users.forEach(
+        (usuario: any) => usuarios.push(usuario.toJSON())
+      )
       res.status(200).json(usuariosResultados)
     })
 })
