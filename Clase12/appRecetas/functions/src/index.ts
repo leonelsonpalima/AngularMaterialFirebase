@@ -1,6 +1,8 @@
 import * as functions from 'firebase-functions';
 import * as admin from "firebase-admin"
 
+import cors = require("cors")
+
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //
@@ -19,6 +21,8 @@ import * as admin from "firebase-admin"
 import express = require("express")
 import { db } from './init';
 const app = express()
+
+app.use(cors())
 
 app.get("/listado", (req, res) => {
   res
@@ -49,6 +53,8 @@ app.get("/registrados", (req, res) => {
       res.status(200).json(usuariosResultados)
     })
 })
+
+
 
 export const usuario = functions.https.onRequest(app)
 

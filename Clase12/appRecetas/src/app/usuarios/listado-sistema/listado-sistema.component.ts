@@ -1,3 +1,4 @@
+import { UsuariosService } from '../../servicios/usuarios.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListadoSistemaComponent implements OnInit {
 
-  constructor() { }
+  constructor(private usuarioService: UsuariosService) { }
 
   ngOnInit() {
+    this.usuarioService.listado()
+      .subscribe(resultado => console.log(resultado))
   }
 
 }
