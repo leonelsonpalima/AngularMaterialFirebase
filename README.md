@@ -62,3 +62,19 @@ Firebase
 6. Dependencias si
 7. npm run build
 8. firebase deploy (Dentro de la carpeta functions)
+
+
+###Proyecto
+
+Login
+    -> correo/contraseña
+    -> google
+
+Monumentos
+    -> Titulo
+    -> Autor
+    -> Año
+    -> Lugar
+    -> Foto
+
+    
